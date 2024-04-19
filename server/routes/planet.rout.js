@@ -8,7 +8,7 @@ const { getPlanets, getPlanet, createPlanet, deletePlanet } = require('../contro
 router.get('/', getPlanets);
 router.get('/:id', getPlanet);
 router.post('/', createPlanet);
-router.post('/:id', deletePlanet);
+router.delete('/:id', deletePlanet);
 
 // eslint-disable-next-line no-undef
 module.exports = router;
