@@ -30,6 +30,7 @@ i18n
                     startDate: "Մեկնարկի ամսաթիվ",
                     endDate: "Ավարտի ամսաթիվ",
                     foundPlanets:"Հայտնաբերված Մոլորակներ",
+                    finder: "Հայտնաբերողի անունը",
 
                     asteroidName: "Անվանում",
                     asteroidDistance: "Հեռավորությունը(կմ)",
@@ -70,6 +71,7 @@ i18n
                     startDate: "Start date",
                     endDate: "End date",
                     foundPlanets:"Found Planets",
+                    finder: "Finder's name",
 
                     asteroidName: "Name",
                     asteroidDistance: "Distance(km)",
@@ -110,6 +112,7 @@ i18n
                     startDate: "Дата начала",
                     endDate: "Дата окончания",
                     foundPlanets:"Найденные Планеты",
+                    finder: "Имя искателя",
                     
                     asteroidName: "Имя",
                     asteroidDistance: "Расстояние(км)",

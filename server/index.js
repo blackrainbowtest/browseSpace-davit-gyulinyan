@@ -1,6 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
 const express = require('express');
 
+const cors = require('cors');
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
 const mongoose = require('mongoose');
 // eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
@@ -10,6 +12,7 @@ const app = express();
 const PORT = 3000;
 
 //middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extend:false}));
 

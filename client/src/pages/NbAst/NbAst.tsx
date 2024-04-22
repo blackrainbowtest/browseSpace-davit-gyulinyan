@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NbaData } from "../../APIs/NbaAPI";
+import { NbaData } from "../../APIs/nbaAPI";
 import formattedDate from "../../APIs/helpers/formattedDate";
 import { Asteroid, NearEarthObjects } from "../../Models/AsteroidTypeModel";
 import { useTranslation } from "react-i18next";
@@ -59,6 +59,7 @@ const NbAst = () => {
 
         const processData = async () => {
             const data = await fetchData();
+
             const asteroidsData: NearEarthObjects = {};
 
             for (const date in data.near_earth_objects) {
@@ -73,6 +74,8 @@ const NbAst = () => {
 
         processData();
     }, [startDate, endDate]);
+
+    console.log(asteroids)
 
     return (
         <>
@@ -106,7 +109,7 @@ const NbAst = () => {
                 </form>
 
                 <div className="table-container overflow-x-auto">
-                <table className={`table-auto w-full ${!asteroids ? "flex flex-col justify-center items-center" : ""}`}>
+                    <table className={`table-auto w-full ${!asteroids ? "flex flex-col justify-center items-center" : ""}`}>
                         <thead>
                             <tr className="bg-gray-200">
                                 <th className="px-4 py-2">{t(nbastTitles.asteroidName)}</th>
@@ -117,28 +120,34 @@ const NbAst = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {asteroids ? (
-                                <>
-                                    {Object.keys(asteroids).map((date: string) =>
-                                        asteroids[date].map((asteroid: Asteroid) => (
-                                            <tr key={asteroid.id}>
-                                                <td className="border px-4 py-2 text-center">{asteroid.name}</td>
-                                                <td className="border px-4 py-2 text-center">{asteroid.close_approach_data[0].miss_distance.kilometers}</td>
-                                                <td className="border px-4 py-2 text-center">{asteroid.absolute_magnitude_h}</td>
-                                                <td className="border px-4 py-2 text-center">
-                                                    {asteroid.estimated_diameter.kilometers.estimated_diameter_min.toFixed(2)} -{" "}
-                                                    {asteroid.estimated_diameter.kilometers.estimated_diameter_max.toFixed(2)}
-                                                </td>
-                                                <td className="border px-4 py-2 text-center">{asteroid.is_potentially_hazardous_asteroid ? "Yes" : "No"}</td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </>
-                            ) : (
+                            {asteroids ?
+                                Object.keys(asteroids).length === 0 ?
+                                    <tr>
+                                        <td className="text-2xl text-red-600 text-center" colSpan={5}> There is no asteroids for today</td>
+                                    </tr>
+                                    :
+                                    <>
+                                        {Object.keys(asteroids).map((date: string) =>
+                                            asteroids[date].map((asteroid: Asteroid) => (
+                                                <tr key={asteroid.id}>
+                                                    <td className="border px-4 py-2 text-center">{asteroid.name}</td>
+                                                    <td className="border px-4 py-2 text-center">{asteroid.close_approach_data[0].miss_distance.kilometers}</td>
+                                                    <td className="border px-4 py-2 text-center">{asteroid.absolute_magnitude_h}</td>
+                                                    <td className="border px-4 py-2 text-center">
+                                                        {asteroid.estimated_diameter.kilometers.estimated_diameter_min.toFixed(2)}
+                                                        {asteroid.estimated_diameter.kilometers.estimated_diameter_max.toFixed(2)}
+                                                    </td>
+                                                    <td className="border px-4 py-2 text-center">{asteroid.is_potentially_hazardous_asteroid ? "Yes" : "No"}</td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </>
+                                :
                                 <tr>
                                     <td className="text-2xl text-red-600 text-center" colSpan={5}> Wait for data or check your network connection</td>
                                 </tr>
-                            )}
+
+                            }
                         </tbody>
                     </table>
                 </div>

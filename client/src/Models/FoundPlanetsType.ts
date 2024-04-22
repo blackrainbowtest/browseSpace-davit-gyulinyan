@@ -3,6 +3,6 @@ export interface FoundPlanetsType {
     galaxyName: string,
     diameter: string,
     distance: string,
-    yourName: string,
-    yourEmail: string
+    finderName: string,
+    email: string
 }
