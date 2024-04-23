@@ -3,6 +3,6 @@ export interface FormData {
     galaxyName: string;
     diameter: number;
     distance: number;
-    yourName: string;
+    finderName: string;
     email: string;
 }

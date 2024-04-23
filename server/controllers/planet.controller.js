@@ -19,7 +19,7 @@ const getPlanet = async (req, res) => {
     }
 };
 
-const createPlanet =  async (req, res) => {
+const createPlanet = async (req, res) => {
     try {
         const planet = await Planet.create(req.body);
         res.status(200).json(planet);
@@ -28,16 +28,16 @@ const createPlanet =  async (req, res) => {
     }
 }
 
-const deletePlanet =  async (req, res) => {
+const deletePlanet = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const planet = await Planet.findByIdAndDelete(id);
 
-        if(!planet) {
-            return res.status(404).json({message: "Planet not found"});
+        if (!planet) {
+            return res.status(404).json({ message: "Planet not found" });
         }
 
-        res.status(200).json({message: "Planet deleted sccesfully"})
+        res.status(200).json({ message: "Planet deleted sccesfully" })
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

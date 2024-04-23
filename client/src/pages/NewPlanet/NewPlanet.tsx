@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { FormData } from '../../Models/NewPlanetTypeModel';
 import { useTranslation } from 'react-i18next';
 import { NewPlanetTypes } from '../../Models/NewPlanetType';
-
+import axios from 'axios';
 
 const NewPlanet: React.FC = () => {
 
@@ -40,7 +40,7 @@ const NewPlanet: React.FC = () => {
         ).required(t(newPlanetTitles.reqPlanetName)),
         diameter: Yup.number().required(t(newPlanetTitles.planetDiameterChar)).positive(t(newPlanetTitles.reqDiameter)),
         distance: Yup.number().required(t(newPlanetTitles.planetDistanceChar)).positive(t(newPlanetTitles.reqDistance)),
-        yourName: Yup.string().required(t(newPlanetTitles.reqUserName)),
+        finderName: Yup.string().required(t(newPlanetTitles.reqUserName)),
         email: Yup.string().email(t(newPlanetTitles.userEmailChar)).required(t(newPlanetTitles.reqUserEmail)),
     });
 
@@ -50,11 +50,20 @@ const NewPlanet: React.FC = () => {
         galaxyName: '',
         diameter: 0,
         distance: 0,
-        yourName: '',
+        finderName: '',
         email: '',
     };
 
-    const handleSubmit = (values: FormData, { resetForm }: FormikHelpers<FormData>) => {
+    const handleSubmit = async (values: FormData, { setSubmitting, resetForm }: FormikHelpers<FormData>) => {
+        try {
+            await axios.post("http://localhost:3000/api/planets", values);
+            alert('Data submitted successfully!');
+            resetForm();
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        } finally {
+            setSubmitting(false);
+        }
         console.log(values);
         resetForm();
     };
@@ -68,7 +77,7 @@ const NewPlanet: React.FC = () => {
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >
-                    {() => (
+                    {({ isSubmitting }) => (
                         <Form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                             <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="planetName">
@@ -134,10 +143,10 @@ const NewPlanet: React.FC = () => {
                                 <Field
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     type="text"
-                                    id="yourName"
-                                    name="yourName"
+                                    id="finderName"
+                                    name="finderName"
                                 />
-                                <ErrorMessage name="yourName" component="div" className="text-red-500 text-xs italic" />
+                                <ErrorMessage name="finderName" component="div" className="text-red-500 text-xs italic" />
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
@@ -152,6 +161,7 @@ const NewPlanet: React.FC = () => {
                                 <ErrorMessage name="email" component="div" className="text-red-500 text-xs italic" />
                             </div>
                             <button
+                                disabled={isSubmitting}
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                 type="submit"
                             >
