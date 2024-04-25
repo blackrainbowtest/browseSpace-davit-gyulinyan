@@ -79,7 +79,7 @@ const NbAst = () => {
 
     return (
         <>
-            <div className="mt-20 container mx-auto">
+            <div className="mt-20 mb-20 container mx-auto">
                 <div className="flex flex-col justify-center items-center">
                     <span className="text-2xl text-center mb-4">{t(nbastTitles.titleKey)}</span>
                     <span className="text-xl mb-4">{t(nbastTitles.subTitleKey)}</span>
